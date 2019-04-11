@@ -4,48 +4,101 @@ using UnityEngine;
 
 public class GridManager : MonoBehaviour
 {
+    public GameObject gem0;
+    public GameObject gem1;
+    public GameObject gem2;
+    public GameObject gem3;
+    public GameObject gem4;
+    public GameObject gem5;
+    public GameObject player;
+    public GameObject empty;
+
+    public GameObject[] gemColors;
+
+    public static GameObject[,] gemGrid;
+
     public const int COLS = 5;
     public const int ROWS = 7;
-    int[,] _gems = new int[COLS,ROWS];
-    public GameObject _gemPrefab;
+    
     // Start is called before the first frame update
     void Start()
     {
-        //_gems[0,0] = 0;
-        //_gems[0, 1] = 7;
-        //_gems[0, 2] = 9;
-        //_gems[1, 0] = 7;
+        gemGrid = new GameObject[ROWS, COLS];
 
-        for (int x = 0; x < COLS; x++)
+        for (int x = 0; x < ROWS; x++)
         {
-            for (int y = 0; y < ROWS; y++)
+            for (int y = 0; y < COLS; y++)
             {
-                int color = Random.Range(0, 6);
-                _gems[x, y] = color;
+                if (x == 3 && y == 2)
+                {
+                    gemGrid[x, y] = player;
+                    Instantiate(player, new Vector3(y, x), Quaternion.identity);
+                }
+                else
+                {
+                    gemGrid[x, y] = gemColors[Random.Range(0, gemColors.Length)];
+                    Instantiate(gemGrid[x, y], new Vector3(y, x), Quaternion.identity);
+                }
+
+                
             }
         }
 
-        InstantiateGems();
-    }
+        //InstantiateGems();
 
-    void InstantiateGems()
-    {
-        for (int x = 0; x < COLS; x++)
+        for (int x = 0; x < ROWS; x++)
         {
-            for (int y = 0; y < ROWS; y++)
+            for (int y = 0; y < COLS; y++)
             {
-                Debug.Log("Gem " + x + "," + y + ": " + _gems[x, y]);
-                GameObject gem = GameObject.Instantiate(_gemPrefab);
-                gem.transform.position = new Vector3((x-3)*1.5f, (y-1)*-1.5f, 0);
+                if (y > 0 && y < 4)
+                {
+                    if ((gemGrid[x, y].tag == gemGrid[x, y + 1].tag) && (gemGrid[x, y].tag == gemGrid[x, y - 1].tag))
+                    {
+                        gemGrid[x, y] = gemColors[Random.Range(0, gemColors.Length)];
+                        gemGrid[x, y + 1] = gemColors[Random.Range(0, gemColors.Length)];
+                        gemGrid[x, y - 1] = gemColors[Random.Range(0, gemColors.Length)];
+                    }
+                }
+
+                if (x > 0 && x < 6)
+                {
+                    if ((gemGrid[x, y].tag == gemGrid[x + 1, y].tag) && (gemGrid[x, y].tag == gemGrid[x - 1, y].tag))
+                    {
+                        gemGrid[x, y] = gemColors[Random.Range(0, gemColors.Length)];
+                        gemGrid[x + 1, y] = gemColors[Random.Range(0, gemColors.Length)];
+                        gemGrid[x - 1, y] = gemColors[Random.Range(0, gemColors.Length)];
+                    }
+                }
             }
         }
     }
+
+    //void InstantiateGems()
+    //{
+    //    for (int x = 0; x < COLS; x++)
+    //    {
+    //        for (int y = 0; y < ROWS; y++)
+    //        {
+    //            Debug.Log("Gem " + x + "," + y + ": " + _gemGrid[x, y]);
+    //            GameObject gem = GameObject.Instantiate(_gemPrefab);
+    //            gem.transform.position = new Vector3((x-3)*1.5f, (y-1)*-1.5f, 0);
+    //        }
+    //    }
+    //}
 
     // Update is called once per frame
     void Update()
     {
-        
+        for(int x = 0; x < ROWS; x++)
+        {
+            for(int y = 0; y < COLS; y++)
+            {
+
+            }
+        }
     }
+
+    //The demo code that doesn't work out of context
 
     //public void MakeGemsFall()
     //{
