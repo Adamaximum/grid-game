@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     int XPos;
     int YPos;
 
-    GameObject temp;
+    public GameObject temp;
 
     // Start is called before the first frame update
     void Start()

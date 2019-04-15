@@ -92,7 +92,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e38a939710ce104ca82f594de332227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gm: {fileID: 0}
-  _gemSR: {fileID: 0}
-  rainbow: []
-  randColor: 0
+  empty: {fileID: 1939486522304764272, guid: a91b6e198205370468b75e94a7a492a4, type: 3}

@@ -15,6 +15,8 @@ public class GridManager : MonoBehaviour
 
     public GameObject[] gemColors;
 
+    GameObject tempGem;
+
     public static GameObject[,] gemGrid;
 
     public const int COLS = 5;
@@ -25,48 +27,55 @@ public class GridManager : MonoBehaviour
     {
         gemGrid = new GameObject[ROWS, COLS];
 
-        for (int x = 0; x < ROWS; x++)
+        for (int y = 0; y < ROWS; y++)
         {
-            for (int y = 0; y < COLS; y++)
+            for (int x = 0; x < COLS; x++)
             {
-                if (x == 3 && y == 2)
+                if (y == 3 && x == 2)
                 {
-                    gemGrid[x, y] = player;
-                    Instantiate(player, new Vector3(y, x), Quaternion.identity);
+                    gemGrid[y, x] = player;
+                    Instantiate(player, new Vector3(x, y), Quaternion.identity);
                 }
                 else
                 {
-                    gemGrid[x, y] = gemColors[Random.Range(0, gemColors.Length)];
-                    Instantiate(gemGrid[x, y], new Vector3(y, x), Quaternion.identity);
+                    gemGrid[y, x] = gemColors[Random.Range(0, gemColors.Length)];
+                    Instantiate(gemGrid[y, x], new Vector3(x, y), Quaternion.identity);
                 }
 
                 
             }
         }
-
+        CheckMatchStart();
         //InstantiateGems();
+    }
 
-        for (int x = 0; x < ROWS; x++)
+    void CheckMatchStart()
+    {
+        for (int y = 0; y < ROWS; y++)
         {
-            for (int y = 0; y < COLS; y++)
+            for (int x = 0; x < COLS; x++)
             {
-                if (y > 0 && y < 4)
+                if (x > 0 && x < 4)
                 {
-                    if ((gemGrid[x, y].tag == gemGrid[x, y + 1].tag) && (gemGrid[x, y].tag == gemGrid[x, y - 1].tag))
+                    if ((gemGrid[y, x].tag == gemGrid[y, x + 1].tag) && (gemGrid[y, x].tag == gemGrid[y, x - 1].tag))
                     {
-                        gemGrid[x, y] = gemColors[Random.Range(0, gemColors.Length)];
-                        gemGrid[x, y + 1] = gemColors[Random.Range(0, gemColors.Length)];
-                        gemGrid[x, y - 1] = gemColors[Random.Range(0, gemColors.Length)];
+                        gemGrid[y, x] = gemColors[Random.Range(0, gemColors.Length)];
+                        gemGrid[y, x + 1] = gemColors[Random.Range(0, gemColors.Length)];
+                        gemGrid[y, x - 1] = gemColors[Random.Range(0, gemColors.Length)];
+
+                        Refresher.isRefreshing = true;
                     }
                 }
 
-                if (x > 0 && x < 6)
+                if (y > 0 && y < 6)
                 {
-                    if ((gemGrid[x, y].tag == gemGrid[x + 1, y].tag) && (gemGrid[x, y].tag == gemGrid[x - 1, y].tag))
+                    if ((gemGrid[y, x].tag == gemGrid[y + 1, x].tag) && (gemGrid[y, x].tag == gemGrid[y - 1, x].tag))
                     {
-                        gemGrid[x, y] = gemColors[Random.Range(0, gemColors.Length)];
-                        gemGrid[x + 1, y] = gemColors[Random.Range(0, gemColors.Length)];
-                        gemGrid[x - 1, y] = gemColors[Random.Range(0, gemColors.Length)];
+                        gemGrid[y, x] = gemColors[Random.Range(0, gemColors.Length)];
+                        gemGrid[y + 1, x] = gemColors[Random.Range(0, gemColors.Length)];
+                        gemGrid[y - 1, x] = gemColors[Random.Range(0, gemColors.Length)];
+
+                        Refresher.isRefreshing = true;
                     }
                 }
             }
@@ -89,15 +98,245 @@ public class GridManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        for(int x = 0; x < ROWS; x++)
-        {
-            for(int y = 0; y < COLS; y++)
-            {
+        CheckMatchUpdate();
 
+        GridFall();
+
+        RefreshRow();
+
+        if (Refresher.isRefreshing)
+        {
+            RefreshGrid();
+        }
+    }
+
+    void CheckMatchUpdate()
+    {
+        for (int y = 0; y < ROWS; y++)
+        {
+            for (int x = 0; x < COLS; x++)
+            {
+                if (x > 0 && x < 4)
+                {
+                    if ((gemGrid[y, x].tag == gemGrid[y, x + 1].tag) && (gemGrid[y, x].tag == gemGrid[y, x - 1].tag) && (gemGrid[y, x].tag != "empty"))
+                    {
+                        if (x == 1)
+                        {
+                            if (gemGrid[y, x].tag == gemGrid[y, x + 2].tag)
+                            {
+                                gemGrid[y, x + 2] = empty;
+
+                                if (gemGrid[y, x].tag == gemGrid[y, x + 3].tag)
+                                {
+                                    gemGrid[y, x + 3] = empty;
+                                }
+                            }
+                        }
+                        if (x == 2)
+                        {
+                            if (gemGrid[y, x].tag == gemGrid[y, x + 2].tag)
+                            {
+                                gemGrid[y, x + 2] = empty;
+                            }
+                            if (gemGrid[y, x].tag == gemGrid[y, x - 2].tag)
+                            {
+                                gemGrid[y, x - 2] = empty;
+                            }
+                        }
+                        if (x == 3)
+                        {
+                            if (gemGrid[y, x].tag == gemGrid[y, x - 2].tag)
+                            {
+                                gemGrid[y, x - 2] = empty;
+
+                                if (gemGrid[y, x].tag == gemGrid[y, x - 3].tag)
+                                {
+                                    gemGrid[y, x - 3] = empty;
+                                }
+                            }
+                        }
+
+                        gemGrid[y, x] = empty;
+                        gemGrid[y, x + 1] = empty;
+                        gemGrid[y, x - 1] = empty;
+                    }
+                }
+                if (y > 0 && y < 6)
+                {
+                    if ((gemGrid[y, x].tag == gemGrid[y + 1, x].tag) && (gemGrid[y, x].tag == gemGrid[y - 1, x].tag) && (gemGrid[y, x].tag != "empty"))
+                    {
+                        if (y == 1)
+                        {
+                            if (gemGrid[y, x].tag == gemGrid[y + 2, x].tag)
+                            {
+                                gemGrid[y + 2, x] = empty;
+
+                                if (gemGrid[y, x].tag == gemGrid[y + 3, x].tag)
+                                {
+                                    gemGrid[y + 3, x] = empty;
+
+                                    if (gemGrid[y, x].tag == gemGrid[y + 4, x].tag)
+                                    {
+                                        gemGrid[y + 4, x] = empty;
+
+                                        if (gemGrid[y, x].tag == gemGrid[y + 5, x].tag)
+                                        {
+                                            gemGrid[y + 5, x] = empty;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        if (y == 2)
+                        {
+                            if (gemGrid[y, x].tag == gemGrid[y + 2, x].tag)
+                            {
+                                gemGrid[y + 2, x] = empty;
+
+                                if (gemGrid[y, x].tag == gemGrid[y + 3, x].tag)
+                                {
+                                    gemGrid[y + 3, x] = empty;
+
+                                    if (gemGrid[y, x].tag == gemGrid[y + 4, x].tag)
+                                    {
+                                        gemGrid[y + 4, x] = empty;
+                                    }
+                                }
+                            }
+
+                            if (gemGrid[y, x].tag == gemGrid[y - 2, x].tag)
+                            {
+                                gemGrid[y - 2, x] = empty;
+                            }
+                        }
+
+                        if (y == 3)
+                        {
+                            if (gemGrid[y, x].tag == gemGrid[y + 2, x].tag)
+                            {
+                                gemGrid[y + 2, x] = empty;
+
+                                if (gemGrid[y, x].tag == gemGrid[y + 3, x].tag)
+                                {
+                                    gemGrid[y + 3, x] = empty;
+                                }
+                            }
+
+                            if (gemGrid[y, x].tag == gemGrid[y - 2, x].tag)
+                            {
+                                gemGrid[y - 2, x] = empty;
+
+                                if (gemGrid[y, x].tag == gemGrid[y - 3, x].tag)
+                                {
+                                    gemGrid[y - 3, x] = empty;
+                                }
+                            }
+                        }
+
+                        if (y == 4)
+                        {
+                            if (gemGrid[y, x].tag == gemGrid[y + 2, x].tag)
+                            {
+                                gemGrid[y + 2, x] = empty;
+                            }
+
+                            if (gemGrid[y, x].tag == gemGrid[y - 2, x].tag)
+                            {
+                                gemGrid[y - 2, x] = empty;
+
+                                if (gemGrid[y, x].tag == gemGrid[y - 3, x].tag)
+                                {
+                                    gemGrid[y - 3, x] = empty;
+
+                                    if (gemGrid[y, x].tag == gemGrid[y - 4, x].tag)
+                                    {
+                                        gemGrid[y - 4, x] = empty;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (y == 5)
+                        {
+                            if (gemGrid[y, x].tag == gemGrid[y - 2, x].tag)
+                            {
+                                gemGrid[y - 2, x] = empty;
+
+                                if (gemGrid[y, x].tag == gemGrid[y - 3, x].tag)
+                                {
+                                    gemGrid[y - 3, x] = empty;
+
+                                    if (gemGrid[y, x].tag == gemGrid[y - 4, x].tag)
+                                    {
+                                        gemGrid[y - 4, x] = empty;
+
+                                        if (gemGrid[y, x].tag == gemGrid[y - 5, x].tag)
+                                        {
+                                            gemGrid[y - 5, x] = empty;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        gemGrid[y, x] = empty;
+                        gemGrid[y + 1, x] = empty;
+                        gemGrid[y - 1, x] = empty;
+                    }
+                }
             }
         }
     }
 
+    void GridFall()
+    {
+        for (int y = 0; y < ROWS; y++)
+        {
+            for (int x = 0; x < COLS; x++)
+            {
+                if (y > 0)
+                {
+                    if (gemGrid[y - 1, x].tag == "empty" && gemGrid[y, x].tag != "empty" && gemGrid[y, x].tag != "Player")
+                    {
+                        tempGem = gemGrid[y, x];
+                        gemGrid[y, x] = gemGrid[y - 1, x];
+                        gemGrid[y - 1, x] = tempGem;
+                    }
+                }
+            }
+        }
+    }
+
+    void RefreshRow()
+    {
+        for (int x = 0; x < COLS; x++)
+        {
+            if (gemGrid[6, x].tag == "empty")
+            {
+                gemGrid[6, x] = gemColors[Random.Range(0, gemColors.Length)];
+            }
+        }
+    }
+
+    void RefreshGrid()
+    {
+        for (int y = 0; y < ROWS; y++)
+        {
+            for (int x = 0; x < COLS; x++)
+            {
+                if (gemGrid[y,x].tag == "Player")
+                {
+
+                }
+                else
+                {
+                    Instantiate(gemGrid[y, x], new Vector3(x, y), Quaternion.identity);
+                }
+            }
+        }
+        Refresher.isRefreshing = false;
+    }
     //The demo code that doesn't work out of context
 
     //public void MakeGemsFall()

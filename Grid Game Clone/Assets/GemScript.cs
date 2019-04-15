@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class GemScript : MonoBehaviour
 {
-    public GridManager gm;
+    //public GridManager gm;
 
-    public SpriteRenderer _gemSR;
+    //public SpriteRenderer _gemSR;
 
-    public Color[] rainbow;
+    //public Color[] rainbow;
 
-    public int randColor;
+    //public int randColor;
+
+    int XPos;
+    int YPos;
+    
+    public GameObject empty;
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +40,16 @@ public class GemScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        XPos = Mathf.RoundToInt(transform.position.x);
+        YPos = Mathf.RoundToInt(transform.position.y);
+
+        StartCoroutine("ClearGrid");
+    }
+
+    IEnumerator ClearGrid()
+    {
+        yield return new WaitForSeconds(.0f);
+        Refresher.isRefreshing = true;
+        Destroy(this.gameObject);
     }
 }
