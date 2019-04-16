@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public int XPos;
-    public int YPos;
+    int XPos;
+    int YPos;
 
     public GameObject temp;
 

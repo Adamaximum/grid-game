@@ -48,7 +48,6 @@ public class GridManager : MonoBehaviour
             }
         }
         CheckMatchStart();
-        //InstantiateGems();
         StartCoroutine("GridFaller");
     }
 
@@ -58,7 +57,7 @@ public class GridManager : MonoBehaviour
         {
             for (int x = 0; x < COLS; x++)
             {
-                if (x > 0 && x < 4)
+                if (x > 0 && x < 4) //Columns: blocks left or right
                 {
                     if ((gemGrid[y, x].tag == gemGrid[y, x + 1].tag) && (gemGrid[y, x].tag == gemGrid[y, x - 1].tag))
                     {
@@ -70,7 +69,7 @@ public class GridManager : MonoBehaviour
                     }
                 }
 
-                if (y > 0 && y < 6)
+                if (y > 0 && y < 6) //Rows: blocks up or down
                 {
                     if ((gemGrid[y, x].tag == gemGrid[y + 1, x].tag) && (gemGrid[y, x].tag == gemGrid[y - 1, x].tag))
                     {
@@ -85,25 +84,10 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    //void InstantiateGems()
-    //{
-    //    for (int x = 0; x < COLS; x++)
-    //    {
-    //        for (int y = 0; y < ROWS; y++)
-    //        {
-    //            Debug.Log("Gem " + x + "," + y + ": " + _gemGrid[x, y]);
-    //            GameObject gem = GameObject.Instantiate(_gemPrefab);
-    //            gem.transform.position = new Vector3((x-3)*1.5f, (y-1)*-1.5f, 0);
-    //        }
-    //    }
-    //}
-
     // Update is called once per frame
     void LateUpdate()
     {
         CheckMatchUpdate();
-
-        //GridFall();
 
         RefreshRow();
 
@@ -126,7 +110,7 @@ public class GridManager : MonoBehaviour
         {
             for (int x = 0; x < COLS; x++)
             {
-                if (x > 0 && x < 4)
+                if (x > 0 && x < 4) //X Values
                 {
                     if ((gemGrid[y, x].tag == gemGrid[y, x + 1].tag) && (gemGrid[y, x].tag == gemGrid[y, x - 1].tag) && (gemGrid[y, x].tag != "empty"))
                     {
@@ -137,7 +121,7 @@ public class GridManager : MonoBehaviour
                         Instantiate(particles, new Vector3(x + 1, y), Quaternion.identity);
                         Instantiate(particles, new Vector3(x - 1, y), Quaternion.identity);
 
-                        if (x == 1)
+                        if (x == 1) //Column 1
                         {
                             if (gemGrid[y, x].tag == gemGrid[y, x + 2].tag)
                             {
@@ -151,7 +135,7 @@ public class GridManager : MonoBehaviour
                                 }
                             }
                         }
-                        if (x == 2)
+                        if (x == 2) //Column 2
                         {
                             if (gemGrid[y, x].tag == gemGrid[y, x + 2].tag)
                             {
@@ -164,7 +148,7 @@ public class GridManager : MonoBehaviour
                                 gemGrid[y, x - 2] = empty;
                             }
                         }
-                        if (x == 3)
+                        if (x == 3) //Column 3
                         {
                             if (gemGrid[y, x].tag == gemGrid[y, x - 2].tag)
                             {
@@ -184,7 +168,8 @@ public class GridManager : MonoBehaviour
                         gemGrid[y, x - 1] = empty;
                     }
                 }
-                if (y > 0 && y < 6)
+
+                if (y > 0 && y < 6) //Y Values
                 {
                     if ((gemGrid[y, x].tag == gemGrid[y + 1, x].tag) && (gemGrid[y, x].tag == gemGrid[y - 1, x].tag) && (gemGrid[y, x].tag != "empty"))
                     {
@@ -195,7 +180,7 @@ public class GridManager : MonoBehaviour
                         Instantiate(particles, new Vector3(x, y + 1), Quaternion.identity);
                         Instantiate(particles, new Vector3(x, y - 1), Quaternion.identity);
 
-                        if (y == 1)
+                        if (y == 1) //Row 1
                         {
                             if (gemGrid[y, x].tag == gemGrid[y + 2, x].tag)
                             {
@@ -222,7 +207,7 @@ public class GridManager : MonoBehaviour
                             }
                         }
 
-                        if (y == 2)
+                        if (y == 2) //Row 2
                         {
                             if (gemGrid[y, x].tag == gemGrid[y + 2, x].tag)
                             {
@@ -249,7 +234,7 @@ public class GridManager : MonoBehaviour
                             }
                         }
 
-                        if (y == 3)
+                        if (y == 3) //Row 3
                         {
                             if (gemGrid[y, x].tag == gemGrid[y + 2, x].tag)
                             {
@@ -276,7 +261,7 @@ public class GridManager : MonoBehaviour
                             }
                         }
 
-                        if (y == 4)
+                        if (y == 4) //Row 4
                         {
                             if (gemGrid[y, x].tag == gemGrid[y + 2, x].tag)
                             {
@@ -303,7 +288,7 @@ public class GridManager : MonoBehaviour
                             }
                         }
 
-                        if (y == 5)
+                        if (y == 5) //Row 5
                         {
                             if (gemGrid[y, x].tag == gemGrid[y - 2, x].tag)
                             {
@@ -387,69 +372,5 @@ public class GridManager : MonoBehaviour
         }
         Refresher.isRefreshing = false;
     }
-    //The demo code that doesn't work out of context
-
-    //public void MakeGemsFall()
-    //{
-    //    for(int width = COLS-1; width>=0; width--)
-    //    {
-    //        for (int height = ROWS - 1; height >= 0; height--)
-    //        {
-    //            GameObject currentToken = tokens[width, height];
-    //            int distance = 0;
-
-    //            do
-    //            {
-    //                distance++;
-    //                destination = tokens[width, height + distance];
-    //            }
-    //            while (destination == null);
-
-    //            tokens[width, height] = null;
-    //            tokens[width, height + distance] = currentToken;
-    //        }
-    //    }
-    //}
-
-    //int CheckColumn(GameObject currentCell, int width, int height)
-    //{
-    //    List<GameObject> matches = new List<GameObject>();
-    //    for (int tempRow = height+1; tempRow < ROWS; height++)
-    //    {
-    //        GameObject tempCell = tokens[width, tempRow];
-    //        if (tempCell.color == currentCell.color)
-    //        {
-    //            matches.Add(tempCell);
-    //        }
-    //        else
-    //        {
-    //            break;
-    //        }
-    //    }
-
-    //    if (matches.Count > 3)
-    //    {
-    //        //do matching stuff
-    //    }
-    //}
-
-    
-
-    //public void CheckForMatches()
-    //{
-    //    GameObject currentCell;
-    //    for(int width = 0; width <COLS; width++)
-    //    {
-    //        for (int height = 0; height < ROWS; height++)
-    //        {
-    //            currentCell tokens[COLS, ROWS];
-    //            tempList = CheckColumn(currentCell, width, height);
-
-    //            foreach (GameObject go in tempList)
-    //            {
-    //                gemsToDestroy.Add(go);
-    //            }
-    //        }
-    //    }
-    //}
 }
+//ATD, you the real MVP.

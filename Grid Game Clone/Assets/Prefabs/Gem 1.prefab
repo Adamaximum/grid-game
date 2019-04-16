@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 590119855333664526}
   - component: {fileID: 5031721559660511019}
   m_Layer: 0
-  m_Name: Gem 3
-  m_TagString: yellow
+  m_Name: Gem 1
+  m_TagString: blue
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -70,7 +70,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: aa8dfb6263fbda44f907f4161eb8be7f, type: 3}
-  m_Color: {r: 1, g: 1, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -89,7 +89,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1939486522304764272}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e38a939710ce104ca82f594de332227, type: 3}
+  m_Script: {fileID: 11500000, guid: ca970be6e85d7a645b6dfe27080ccb17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  empty: {fileID: 1939486522304764272, guid: a91b6e198205370468b75e94a7a492a4, type: 3}
+  empty: {fileID: 0}

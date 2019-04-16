@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class Refresher : MonoBehaviour
 {
-
     public static bool isRefreshing = false;
 
     // Start is called before the first frame update
