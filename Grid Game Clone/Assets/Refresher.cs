@@ -20,6 +20,8 @@ public class Refresher : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             SceneManager.LoadScene("SampleScene");
+            ValTracker.moves = 6;
+            ValTracker.score = 0;
         }
     }
 }

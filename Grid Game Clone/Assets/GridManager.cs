@@ -13,6 +13,8 @@ public class GridManager : MonoBehaviour
     public GameObject player;
     public GameObject empty;
 
+    public GameObject particles;
+
     public GameObject[] gemColors;
 
     GameObject tempGem;
@@ -47,6 +49,7 @@ public class GridManager : MonoBehaviour
         }
         CheckMatchStart();
         //InstantiateGems();
+        StartCoroutine("GridFaller");
     }
 
     void CheckMatchStart()
@@ -96,11 +99,11 @@ public class GridManager : MonoBehaviour
     //}
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         CheckMatchUpdate();
 
-        GridFall();
+        //GridFall();
 
         RefreshRow();
 
@@ -108,6 +111,13 @@ public class GridManager : MonoBehaviour
         {
             RefreshGrid();
         }
+    }
+
+    IEnumerator GridFaller()
+    {
+        GridFall();
+        yield return new WaitForSeconds(.25f);
+        StartCoroutine("GridFaller");
     }
 
     void CheckMatchUpdate()
@@ -120,14 +130,23 @@ public class GridManager : MonoBehaviour
                 {
                     if ((gemGrid[y, x].tag == gemGrid[y, x + 1].tag) && (gemGrid[y, x].tag == gemGrid[y, x - 1].tag) && (gemGrid[y, x].tag != "empty"))
                     {
+                        ValTracker.moves = 6;
+                        ValTracker.score += 3;
+
+                        Instantiate(particles, new Vector3(x, y), Quaternion.identity);
+                        Instantiate(particles, new Vector3(x + 1, y), Quaternion.identity);
+                        Instantiate(particles, new Vector3(x - 1, y), Quaternion.identity);
+
                         if (x == 1)
                         {
                             if (gemGrid[y, x].tag == gemGrid[y, x + 2].tag)
                             {
+                                ValTracker.score += 1;
                                 gemGrid[y, x + 2] = empty;
 
                                 if (gemGrid[y, x].tag == gemGrid[y, x + 3].tag)
                                 {
+                                    ValTracker.score += 1;
                                     gemGrid[y, x + 3] = empty;
                                 }
                             }
@@ -136,10 +155,12 @@ public class GridManager : MonoBehaviour
                         {
                             if (gemGrid[y, x].tag == gemGrid[y, x + 2].tag)
                             {
+                                ValTracker.score += 1;
                                 gemGrid[y, x + 2] = empty;
                             }
                             if (gemGrid[y, x].tag == gemGrid[y, x - 2].tag)
                             {
+                                ValTracker.score += 1;
                                 gemGrid[y, x - 2] = empty;
                             }
                         }
@@ -147,10 +168,12 @@ public class GridManager : MonoBehaviour
                         {
                             if (gemGrid[y, x].tag == gemGrid[y, x - 2].tag)
                             {
+                                ValTracker.score += 1;
                                 gemGrid[y, x - 2] = empty;
 
                                 if (gemGrid[y, x].tag == gemGrid[y, x - 3].tag)
                                 {
+                                    ValTracker.score += 1;
                                     gemGrid[y, x - 3] = empty;
                                 }
                             }
@@ -165,22 +188,33 @@ public class GridManager : MonoBehaviour
                 {
                     if ((gemGrid[y, x].tag == gemGrid[y + 1, x].tag) && (gemGrid[y, x].tag == gemGrid[y - 1, x].tag) && (gemGrid[y, x].tag != "empty"))
                     {
+                        ValTracker.moves = 6;
+                        ValTracker.score += 3;
+
+                        Instantiate(particles, new Vector3(x, y), Quaternion.identity);
+                        Instantiate(particles, new Vector3(x, y + 1), Quaternion.identity);
+                        Instantiate(particles, new Vector3(x, y - 1), Quaternion.identity);
+
                         if (y == 1)
                         {
                             if (gemGrid[y, x].tag == gemGrid[y + 2, x].tag)
                             {
+                                ValTracker.score += 1;
                                 gemGrid[y + 2, x] = empty;
 
                                 if (gemGrid[y, x].tag == gemGrid[y + 3, x].tag)
                                 {
+                                    ValTracker.score += 1;
                                     gemGrid[y + 3, x] = empty;
 
                                     if (gemGrid[y, x].tag == gemGrid[y + 4, x].tag)
                                     {
+                                        ValTracker.score += 1;
                                         gemGrid[y + 4, x] = empty;
 
                                         if (gemGrid[y, x].tag == gemGrid[y + 5, x].tag)
                                         {
+                                            ValTracker.score += 1;
                                             gemGrid[y + 5, x] = empty;
                                         }
                                     }
@@ -192,14 +226,17 @@ public class GridManager : MonoBehaviour
                         {
                             if (gemGrid[y, x].tag == gemGrid[y + 2, x].tag)
                             {
+                                ValTracker.score += 1;
                                 gemGrid[y + 2, x] = empty;
 
                                 if (gemGrid[y, x].tag == gemGrid[y + 3, x].tag)
                                 {
+                                    ValTracker.score += 1;
                                     gemGrid[y + 3, x] = empty;
 
                                     if (gemGrid[y, x].tag == gemGrid[y + 4, x].tag)
                                     {
+                                        ValTracker.score += 1;
                                         gemGrid[y + 4, x] = empty;
                                     }
                                 }
@@ -207,6 +244,7 @@ public class GridManager : MonoBehaviour
 
                             if (gemGrid[y, x].tag == gemGrid[y - 2, x].tag)
                             {
+                                ValTracker.score += 1;
                                 gemGrid[y - 2, x] = empty;
                             }
                         }
@@ -215,20 +253,24 @@ public class GridManager : MonoBehaviour
                         {
                             if (gemGrid[y, x].tag == gemGrid[y + 2, x].tag)
                             {
+                                ValTracker.score += 1;
                                 gemGrid[y + 2, x] = empty;
 
                                 if (gemGrid[y, x].tag == gemGrid[y + 3, x].tag)
                                 {
+                                    ValTracker.score += 1;
                                     gemGrid[y + 3, x] = empty;
                                 }
                             }
 
                             if (gemGrid[y, x].tag == gemGrid[y - 2, x].tag)
                             {
+                                ValTracker.score += 1;
                                 gemGrid[y - 2, x] = empty;
 
                                 if (gemGrid[y, x].tag == gemGrid[y - 3, x].tag)
                                 {
+                                    ValTracker.score += 1;
                                     gemGrid[y - 3, x] = empty;
                                 }
                             }
@@ -238,19 +280,23 @@ public class GridManager : MonoBehaviour
                         {
                             if (gemGrid[y, x].tag == gemGrid[y + 2, x].tag)
                             {
+                                ValTracker.score += 1;
                                 gemGrid[y + 2, x] = empty;
                             }
 
                             if (gemGrid[y, x].tag == gemGrid[y - 2, x].tag)
                             {
+                                ValTracker.score += 1;
                                 gemGrid[y - 2, x] = empty;
 
                                 if (gemGrid[y, x].tag == gemGrid[y - 3, x].tag)
                                 {
+                                    ValTracker.score += 1;
                                     gemGrid[y - 3, x] = empty;
 
                                     if (gemGrid[y, x].tag == gemGrid[y - 4, x].tag)
                                     {
+                                        ValTracker.score += 1;
                                         gemGrid[y - 4, x] = empty;
                                     }
                                 }
@@ -261,18 +307,22 @@ public class GridManager : MonoBehaviour
                         {
                             if (gemGrid[y, x].tag == gemGrid[y - 2, x].tag)
                             {
+                                ValTracker.score += 1;
                                 gemGrid[y - 2, x] = empty;
 
                                 if (gemGrid[y, x].tag == gemGrid[y - 3, x].tag)
                                 {
+                                    ValTracker.score += 1;
                                     gemGrid[y - 3, x] = empty;
 
                                     if (gemGrid[y, x].tag == gemGrid[y - 4, x].tag)
                                     {
+                                        ValTracker.score += 1;
                                         gemGrid[y - 4, x] = empty;
 
                                         if (gemGrid[y, x].tag == gemGrid[y - 5, x].tag)
                                         {
+                                            ValTracker.score += 1;
                                             gemGrid[y - 5, x] = empty;
                                         }
                                     }

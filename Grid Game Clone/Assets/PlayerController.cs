@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    int XPos;
-    int YPos;
+    public int XPos;
+    public int YPos;
 
     public GameObject temp;
 
@@ -21,33 +21,45 @@ public class PlayerController : MonoBehaviour
         XPos = Mathf.RoundToInt(transform.position.x);
         YPos = Mathf.RoundToInt(transform.position.y);
 
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if(ValTracker.moves > 0)
+        {
+            MovePlayer();
+        }
+    }
+
+    void MovePlayer()
+    {
+        if (Input.GetKeyDown(KeyCode.DownArrow) && !(Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow)))
         {
             temp = GridManager.gemGrid[YPos - 1, XPos];
             GridManager.gemGrid[YPos - 1, XPos] = this.gameObject;
             GridManager.gemGrid[YPos, XPos] = temp;
             transform.position += new Vector3(0, -1, 0);
+            ValTracker.moves -= 1;
         }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow) && !(Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow)))
         {
             temp = GridManager.gemGrid[YPos + 1, XPos];
             GridManager.gemGrid[YPos + 1, XPos] = this.gameObject;
             GridManager.gemGrid[YPos, XPos] = temp;
             transform.position += new Vector3(0, 1, 0);
+            ValTracker.moves -= 1;
         }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKeyDown(KeyCode.LeftArrow) && !(Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.RightArrow)))
         {
             temp = GridManager.gemGrid[YPos, XPos - 1];
             GridManager.gemGrid[YPos, XPos - 1] = this.gameObject;
             GridManager.gemGrid[YPos, XPos] = temp;
             transform.position += new Vector3(-1, 0, 0);
+            ValTracker.moves -= 1;
         }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.RightArrow) && !(Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.DownArrow)))
         {
             temp = GridManager.gemGrid[YPos, XPos + 1];
             GridManager.gemGrid[YPos, XPos + 1] = this.gameObject;
             GridManager.gemGrid[YPos, XPos] = temp;
             transform.position += new Vector3(1, 0, 0);
+            ValTracker.moves -= 1;
         }
     }
 }
