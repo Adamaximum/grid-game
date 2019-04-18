@@ -37,8 +37,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0276, y: 0.0145}
-  m_SizeDelta: {x: 0.4587, y: 0.5394}
+  m_AnchoredPosition: {x: 0.0215, y: 0.0145}
+  m_SizeDelta: {x: 0.7222, y: 0.5394}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &4283325327488455271
 MeshRenderer:
@@ -113,7 +113,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: 6
+  m_text: 10
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: eb71092f171000f4ab8bda100f1b50eb, type: 2}
   m_sharedMaterial: {fileID: 21997019413694328, guid: eb71092f171000f4ab8bda100f1b50eb,
@@ -183,7 +183,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 8653070251078011700}
-    characterCount: 1
+    characterCount: 2
     spriteCount: 0
     spaceCount: 0
     wordCount: 1

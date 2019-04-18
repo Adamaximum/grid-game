@@ -17,12 +17,12 @@ public class GridManager : MonoBehaviour
 
     public GameObject[] gemColors;
 
-    GameObject tempGem;
+    public GameObject tempGem;
 
     public static GameObject[,] gemGrid;
 
-    public const int COLS = 5;
-    public const int ROWS = 7;
+    public int COLS = 5;
+    public int ROWS = 7;
     
     // Start is called before the first frame update
     void Start()
@@ -43,8 +43,6 @@ public class GridManager : MonoBehaviour
                     gemGrid[y, x] = gemColors[Random.Range(0, gemColors.Length)];
                     Instantiate(gemGrid[y, x], new Vector3(x, y), Quaternion.identity);
                 }
-
-                
             }
         }
         CheckMatchStart();
@@ -57,7 +55,7 @@ public class GridManager : MonoBehaviour
         {
             for (int x = 0; x < COLS; x++)
             {
-                if (x > 0 && x < 4) //Columns: blocks left or right
+                if (x > 0 && x < COLS - 1) //Columns: blocks left or right
                 {
                     if ((gemGrid[y, x].tag == gemGrid[y, x + 1].tag) && (gemGrid[y, x].tag == gemGrid[y, x - 1].tag))
                     {
@@ -69,7 +67,7 @@ public class GridManager : MonoBehaviour
                     }
                 }
 
-                if (y > 0 && y < 6) //Rows: blocks up or down
+                if (y > 0 && y < ROWS - 1) //Rows: blocks up or down
                 {
                     if ((gemGrid[y, x].tag == gemGrid[y + 1, x].tag) && (gemGrid[y, x].tag == gemGrid[y - 1, x].tag))
                     {
@@ -110,11 +108,11 @@ public class GridManager : MonoBehaviour
         {
             for (int x = 0; x < COLS; x++)
             {
-                if (x > 0 && x < 4) //X Values
+                if (x > 0 && x < COLS - 1) //X Values
                 {
                     if ((gemGrid[y, x].tag == gemGrid[y, x + 1].tag) && (gemGrid[y, x].tag == gemGrid[y, x - 1].tag) && (gemGrid[y, x].tag != "empty"))
                     {
-                        ValTracker.moves = 6;
+                        ValTracker.moves = ValTracker.movesInit;
                         ValTracker.score += 3;
 
                         Instantiate(particles, new Vector3(x, y), Quaternion.identity);
@@ -162,18 +160,17 @@ public class GridManager : MonoBehaviour
                                 }
                             }
                         }
-
                         gemGrid[y, x] = empty;
                         gemGrid[y, x + 1] = empty;
                         gemGrid[y, x - 1] = empty;
                     }
                 }
 
-                if (y > 0 && y < 6) //Y Values
+                if (y > 0 && y < ROWS - 1) //Y Values
                 {
                     if ((gemGrid[y, x].tag == gemGrid[y + 1, x].tag) && (gemGrid[y, x].tag == gemGrid[y - 1, x].tag) && (gemGrid[y, x].tag != "empty"))
                     {
-                        ValTracker.moves = 6;
+                        ValTracker.moves = ValTracker.movesInit;
                         ValTracker.score += 3;
 
                         Instantiate(particles, new Vector3(x, y), Quaternion.identity);
@@ -226,7 +223,6 @@ public class GridManager : MonoBehaviour
                                     }
                                 }
                             }
-
                             if (gemGrid[y, x].tag == gemGrid[y - 2, x].tag)
                             {
                                 ValTracker.score += 1;
@@ -247,7 +243,6 @@ public class GridManager : MonoBehaviour
                                     gemGrid[y + 3, x] = empty;
                                 }
                             }
-
                             if (gemGrid[y, x].tag == gemGrid[y - 2, x].tag)
                             {
                                 ValTracker.score += 1;
@@ -347,9 +342,9 @@ public class GridManager : MonoBehaviour
     {
         for (int x = 0; x < COLS; x++)
         {
-            if (gemGrid[6, x].tag == "empty")
+            if (gemGrid[ROWS - 1, x].tag == "empty")
             {
-                gemGrid[6, x] = gemColors[Random.Range(0, gemColors.Length)];
+                gemGrid[ROWS - 1, x] = gemColors[Random.Range(0, gemColors.Length)];
             }
         }
     }

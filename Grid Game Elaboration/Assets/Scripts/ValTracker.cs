@@ -8,6 +8,8 @@ public class ValTracker : MonoBehaviour
     public static int score = 0;
     public static int moves = 6;
 
+    public static int movesInit;
+
     public TextMeshProUGUI scoreNum;
     public TextMeshProUGUI moveNum;
 
@@ -19,6 +21,10 @@ public class ValTracker : MonoBehaviour
         scoreNum = GameObject.Find("ScoreNum").GetComponent<TextMeshProUGUI>();
         moveNum = GameObject.Find("MoveNum").GetComponent<TextMeshProUGUI>();
         instruct = GameObject.Find("Instruct").GetComponent<TextMeshProUGUI>();
+
+        movesInit = moves;
+
+        Debug.Log(movesInit);
     }
 
     // Update is called once per frame

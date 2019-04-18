@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    GridManager gm;
+
     int XPos;
     int YPos;
 
@@ -12,7 +14,9 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        gm = GameObject.Find("GridManager").GetComponent<GridManager>();
+
+        StartCoroutine("PlayerFaller");
     }
 
     // Update is called once per frame
@@ -25,6 +29,13 @@ public class PlayerController : MonoBehaviour
         {
             MovePlayer();
         }
+    }
+
+    IEnumerator PlayerFaller()
+    {
+        PlayerFall();
+        yield return new WaitForSeconds(.25f);
+        StartCoroutine("PlayerFaller");
     }
 
     void MovePlayer()
@@ -60,6 +71,26 @@ public class PlayerController : MonoBehaviour
             GridManager.gemGrid[YPos, XPos] = temp;
             transform.position += new Vector3(1, 0, 0);
             ValTracker.moves -= 1;
+        }
+    }
+
+    void PlayerFall()
+    {
+        for (int y = 0; y < gm.ROWS; y++)
+        {
+            for (int x = 0; x < gm.COLS; x++)
+            {
+                if (y > 0)
+                {
+                    if (GridManager.gemGrid[y - 1, x].tag == "empty" && GridManager.gemGrid[y, x].tag == "Player")
+                    {
+                        temp = GridManager.gemGrid[YPos - 1, XPos];
+                        GridManager.gemGrid[YPos - 1, XPos] = this.gameObject;
+                        GridManager.gemGrid[YPos, XPos] = temp;
+                        transform.position += new Vector3(0, -1, 0);
+                    }
+                }
+            }
         }
     }
 }
