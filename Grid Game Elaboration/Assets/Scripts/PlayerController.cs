@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     GridManager gm;
     CameraControl cc;
+    ValTracker vt;
 
     int XPos;
     int YPos;
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour
     {
         gm = GameObject.Find("GridManager").GetComponent<GridManager>();
         cc = GameObject.Find("Main Camera").GetComponent<CameraControl>();
+        vt = GameObject.Find("GridManager").GetComponent<ValTracker>();
 
         StartCoroutine("PlayerFaller");
     }
@@ -32,9 +34,15 @@ public class PlayerController : MonoBehaviour
             MovePlayer();
         }
 
-        if(cc.transform.position.y >= transform.position.y + 3 || cc.transform.position.y <= transform.position.y - 4)
+        if(cc.transform.position.y >= YPos + 3 || cc.transform.position.y <= YPos - 3)
         {
             ValTracker.moves = 0;
+        }
+
+        if (YPos == 29)
+        {
+            ValTracker.gameOver = true;
+            vt.instruct.text = "\n\nYou have ascended!\n\nFinal Score: " + ValTracker.score.ToString() + "\n\nPress R to Restart.\n\nPress Esc to Quit.";
         }
     }
 

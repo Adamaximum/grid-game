@@ -38,7 +38,8 @@ public class ValTracker : MonoBehaviour
 
         if (moves == 0)
         {
-            instruct.text = "\n\nGame Over!\n\nFinal Score: "+score.ToString()+"\n\nPress R to Restart.";
+            instruct.text = "\n\nYou have failed to ascend!\n\nFinal Score: "+score.ToString()+"\n\nPress R to Restart.\n\nPress Esc to Quit.";
+            moves = 0;
             gameOver = true;
         }
     }
