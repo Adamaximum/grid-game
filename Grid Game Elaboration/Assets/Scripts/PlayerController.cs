@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     GridManager gm;
+    CameraControl cc;
 
     int XPos;
     int YPos;
@@ -15,6 +16,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         gm = GameObject.Find("GridManager").GetComponent<GridManager>();
+        cc = GameObject.Find("Main Camera").GetComponent<CameraControl>();
 
         StartCoroutine("PlayerFaller");
     }
@@ -25,9 +27,14 @@ public class PlayerController : MonoBehaviour
         XPos = Mathf.RoundToInt(transform.position.x);
         YPos = Mathf.RoundToInt(transform.position.y);
 
-        if(ValTracker.moves > 0)
+        if (ValTracker.moves > 0)
         {
             MovePlayer();
+        }
+
+        if(cc.transform.position.y >= transform.position.y + 3 || cc.transform.position.y <= transform.position.y - 4)
+        {
+            ValTracker.moves = 0;
         }
     }
 

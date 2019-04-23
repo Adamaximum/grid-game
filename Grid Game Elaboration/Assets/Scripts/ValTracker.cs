@@ -8,7 +8,7 @@ public class ValTracker : MonoBehaviour
     public static int score = 0;
     public static int moves = 6;
 
-    public static int movesInit;
+    public static bool gameOver = false;
 
     public TextMeshProUGUI scoreNum;
     public TextMeshProUGUI moveNum;
@@ -22,20 +22,24 @@ public class ValTracker : MonoBehaviour
         moveNum = GameObject.Find("MoveNum").GetComponent<TextMeshProUGUI>();
         instruct = GameObject.Find("Instruct").GetComponent<TextMeshProUGUI>();
 
-        movesInit = moves;
+        moves = 6;
 
-        Debug.Log(movesInit);
+        //Debug.Log(movesInit);
     }
 
     // Update is called once per frame
     void Update()
     {
-        scoreNum.text = score.ToString();
-        moveNum.text = moves.ToString();
+        if (gameOver == false)
+        {
+            scoreNum.text = score.ToString();
+            moveNum.text = moves.ToString();
+        }
 
-        if(moves == 0)
+        if (moves == 0)
         {
             instruct.text = "\n\nGame Over!\n\nFinal Score: "+score.ToString()+"\n\nPress R to Restart.";
+            gameOver = true;
         }
     }
 }

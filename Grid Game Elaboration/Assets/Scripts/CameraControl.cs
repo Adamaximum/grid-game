@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
-    public Camera orthoCam;
-
-    public bool movementToggle = true;
+    public float camSpeed = 0.01f;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +15,11 @@ public class CameraControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += new Vector3(0, 0.01f, 0);
+        if (ValTracker.gameOver == false)
+        {
+            transform.position += new Vector3(0, camSpeed, 0);
+        }
+
+        camSpeed += 0.00001f;
     }
 }

@@ -21,6 +21,11 @@ public class Refresher : MonoBehaviour
             SceneManager.LoadScene("SampleScene");
             ValTracker.moves = 6;
             ValTracker.score = 0;
+            ValTracker.gameOver = false;
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
         }
     }
 }

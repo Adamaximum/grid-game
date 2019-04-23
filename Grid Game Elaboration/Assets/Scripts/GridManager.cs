@@ -112,7 +112,7 @@ public class GridManager : MonoBehaviour
                 {
                     if ((gemGrid[y, x].tag == gemGrid[y, x + 1].tag) && (gemGrid[y, x].tag == gemGrid[y, x - 1].tag) && (gemGrid[y, x].tag != "empty"))
                     {
-                        ValTracker.moves = ValTracker.movesInit;
+                        ValTracker.moves = 6;
                         ValTracker.score += 3;
 
                         Instantiate(particles, new Vector3(x, y), Quaternion.identity);
@@ -170,7 +170,7 @@ public class GridManager : MonoBehaviour
                 {
                     if ((gemGrid[y, x].tag == gemGrid[y + 1, x].tag) && (gemGrid[y, x].tag == gemGrid[y - 1, x].tag) && (gemGrid[y, x].tag != "empty"))
                     {
-                        ValTracker.moves = ValTracker.movesInit;
+                        ValTracker.moves = 6;
                         ValTracker.score += 3;
 
                         Instantiate(particles, new Vector3(x, y), Quaternion.identity);
