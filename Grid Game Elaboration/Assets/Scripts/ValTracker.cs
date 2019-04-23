@@ -23,8 +23,6 @@ public class ValTracker : MonoBehaviour
         instruct = GameObject.Find("Instruct").GetComponent<TextMeshProUGUI>();
 
         moves = 6;
-
-        //Debug.Log(movesInit);
     }
 
     // Update is called once per frame

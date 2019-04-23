@@ -787,7 +787,6 @@ GameObject:
   m_Component:
   - component: {fileID: 643557896}
   - component: {fileID: 643557895}
-  - component: {fileID: 643557899}
   - component: {fileID: 643557897}
   - component: {fileID: 643557898}
   - component: {fileID: 643557900}
@@ -871,25 +870,6 @@ MonoBehaviour:
   scoreNum: {fileID: 0}
   moveNum: {fileID: 0}
   instruct: {fileID: 0}
---- !u!114 &643557899
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 643557894}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13b6aa57008e9c644bac6844d3cc7130, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gemColors:
-  - {fileID: 1939486522304764272, guid: 9b2c398793a34ed4bbfe2b3a404ffc39, type: 3}
-  - {fileID: 1939486522304764272, guid: 8bce17756daf8cd419c03b1c00874134, type: 3}
-  - {fileID: 1939486522304764272, guid: be063406660869241b654f98ad988963, type: 3}
-  - {fileID: 1939486522304764272, guid: 8f408ccb4053c0e4ca2b1bc144b48675, type: 3}
-  - {fileID: 1939486522304764272, guid: bc31a77e0ac021149a840727b01c7877, type: 3}
-  - {fileID: 1939486522304764272, guid: 6b47781fb33d8f64c84906337c10c88c, type: 3}
 --- !u!82 &643557900
 AudioSource:
   m_ObjectHideFlags: 0
