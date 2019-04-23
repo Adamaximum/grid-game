@@ -13,12 +13,16 @@ public class PlayerController : MonoBehaviour
 
     public GameObject temp;
 
+    AudioSource moveSound;
+
     // Start is called before the first frame update
     void Start()
     {
         gm = GameObject.Find("GridManager").GetComponent<GridManager>();
         cc = GameObject.Find("Main Camera").GetComponent<CameraControl>();
         vt = GameObject.Find("GridManager").GetComponent<ValTracker>();
+
+        moveSound = gameObject.GetComponent<AudioSource>();
 
         StartCoroutine("PlayerFaller");
     }
@@ -29,7 +33,7 @@ public class PlayerController : MonoBehaviour
         XPos = Mathf.RoundToInt(transform.position.x);
         YPos = Mathf.RoundToInt(transform.position.y);
 
-        if (ValTracker.moves > 0)
+        if (ValTracker.moves > 0 && YPos < 29)
         {
             MovePlayer();
         }
@@ -62,6 +66,8 @@ public class PlayerController : MonoBehaviour
             GridManager.gemGrid[YPos, XPos] = temp;
             transform.position += new Vector3(0, -1, 0);
             ValTracker.moves -= 1;
+
+            moveSound.Play();
         }
         if (Input.GetKeyDown(KeyCode.UpArrow) && !(Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow)))
         {
@@ -70,6 +76,8 @@ public class PlayerController : MonoBehaviour
             GridManager.gemGrid[YPos, XPos] = temp;
             transform.position += new Vector3(0, 1, 0);
             ValTracker.moves -= 1;
+
+            moveSound.Play();
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow) && !(Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.RightArrow)))
         {
@@ -78,6 +86,8 @@ public class PlayerController : MonoBehaviour
             GridManager.gemGrid[YPos, XPos] = temp;
             transform.position += new Vector3(-1, 0, 0);
             ValTracker.moves -= 1;
+
+            moveSound.Play();
         }
         if (Input.GetKeyDown(KeyCode.RightArrow) && !(Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.DownArrow)))
         {
@@ -86,6 +96,8 @@ public class PlayerController : MonoBehaviour
             GridManager.gemGrid[YPos, XPos] = temp;
             transform.position += new Vector3(1, 0, 0);
             ValTracker.moves -= 1;
+
+            moveSound.Play();
         }
     }
 

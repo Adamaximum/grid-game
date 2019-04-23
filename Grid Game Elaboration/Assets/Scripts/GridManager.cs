@@ -23,10 +23,14 @@ public class GridManager : MonoBehaviour
 
     public int COLS = 5;
     public int ROWS = 7;
+
+    AudioSource matchSound;
     
     // Start is called before the first frame update
     void Start()
     {
+        matchSound = gameObject.GetComponent<AudioSource>();
+
         gemGrid = new GameObject[ROWS, COLS];
 
         for (int y = 0; y < ROWS; y++)
@@ -119,6 +123,8 @@ public class GridManager : MonoBehaviour
                         Instantiate(particles, new Vector3(x + 1, y), Quaternion.identity);
                         Instantiate(particles, new Vector3(x - 1, y), Quaternion.identity);
 
+                        matchSound.Play();
+
                         if (x == 1) //Column 1
                         {
                             if (gemGrid[y, x].tag == gemGrid[y, x + 2].tag)
@@ -176,6 +182,8 @@ public class GridManager : MonoBehaviour
                         Instantiate(particles, new Vector3(x, y), Quaternion.identity);
                         Instantiate(particles, new Vector3(x, y + 1), Quaternion.identity);
                         Instantiate(particles, new Vector3(x, y - 1), Quaternion.identity);
+
+                        matchSound.Play();
 
                         if (y == 1) //Row 1
                         {
